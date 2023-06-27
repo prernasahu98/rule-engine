@@ -17,7 +17,7 @@ The user can save the changes after editing a subrule or they can delete it usin
 To save the changes user has to click on update, which will also update that particular rule in the list of rules.<br>
 To submit the form a user has to `confirm` it and then click on `submit` button.
 
-## prerequisite
+## Prerequisite
 
 [Angular CLI](https://github.com/angular/angular-cli) version 15.2.8 or above.<br>
 [npm](https://www.npmjs.com/package/npm) version 9.5.1 or above.<br>
@@ -26,10 +26,6 @@ To submit the form a user has to `confirm` it and then click on `submit` button.
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
