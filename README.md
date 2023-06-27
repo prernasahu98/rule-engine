@@ -13,6 +13,7 @@ After clicking on add button, the existed subrules will be disabled. If a user w
 A user can also delete any particular subrule using the `delete` button.<br>
 To combine the multiple subrules into a single rule the user can select `any` or `all` condition and click on `add rule` button.<br>
 The user will be able to see the single just rule below the form in a python readable format.<br>
+The user can also edit or delete any particular rule from the list of rules by selecting an action `edit` or `delete`.
 
 ## Development server
 
