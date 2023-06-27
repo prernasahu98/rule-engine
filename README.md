@@ -1,6 +1,9 @@
 # RuleEngine
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.8.
+The purpose of `rule-engine` is to create multiple rules and filter out data based on the given filter by the user.
+A user can combine multiple subrules by giving the any`(|)` or all`(&)` condition to make a single set of rules.
+
 
 ## Development server
 
