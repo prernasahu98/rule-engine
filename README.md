@@ -5,7 +5,7 @@ The purpose of `rule-engine` is to create multiple rules and filter out data bas
 A user can combine multiple subrules by giving the any`(|)` or all`(&)` condition to make a single set of rules.<br>
 User will be able to see the rules in the python readable format.
 
-##Functionality of RuleEngine
+## Functionality of RuleEngine
 The first thing is the user has to enter a filter name of their choice and click on `done` button to enable the form.<br>
 Once the form is enabled, the next step is to select input, select data type, select condition and enter a valid value.<br>
 To save the subrule and create a new row/subrule, a user has to click on add button.<br>
