@@ -1,0 +1,210 @@
+<div class="container">
+
+    <div class="box">
+
+        <form class="form-group" style="display: flex;">
+            <h6 style="margin-left: 2%;">Match</h6>
+            <input type="radio" class="form-check-input" id="any" name="anyOrAll" (change)="onSelectAnyOrAll('any')">
+            <label class="form-check-label" for="any">Any</label>
+            <input type="radio" class="form-check-input" id="all" name="anyOrAll" (change)="onSelectAnyOrAll('all')">
+            <label class="form-check-label" for="all">All</label>
+            <h5 *ngIf="selectedFilterName" style="margin-left: 32%;">{{filterName}}</h5>
+            <input class="form-control" placeholder="Enter Filter Name" [(ngModel)]="filterName"
+                style="width: 200px;margin-left: 20%;" *ngIf="!selectedFilterName">
+            <button style="margin-left: 2%;" class="btn btn-outline-success" (click)="selectedName()"
+                *ngIf="!selectedFilterName">Done</button>
+
+        </form>
+    </div>
+
+    <div class="row">
+
+        <form class="form" #filterForm="ngForm">
+
+            <div class="form-wrapper">
+                <div class="form-row" *ngFor="let count of datascount; let i = index ">
+                    <div class="form-group col-md-4">
+                        <select id="inputState" class="form-control" style="width: 160px;"
+                            [disabled]="(!selectedFilterName || added(i)) && !onEdited(i)" #col
+                            (change)="onChangeColName(col.value,i)">
+                            <option selected>Select Input...</option>
+                            <option *ngFor="let value of inputData">{{value.colName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select id="inputState" class="form-control" style="width: 160px; margin-left: -110px;"
+                            [disabled]="(!selectedFilterName || added(i)) && !onEdited(i)" #datatype
+                            (change)="onChangeDatatype(datatype.value)">
+                            <option selected>Select Input Type...</option>
+                            <option>{{inputType[i]}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select id="inputState" class="form-control" style="width: 160px; margin-left: -220px;"
+                            [disabled]="(!selectedFilterName || added(i)) && !onEdited(i)" #condition
+                            (change)="onChangeCondition(condition.value)">
+                            <option selected>Select condition...</option>
+                            <option *ngFor="let value of conditionArr[i]">{{value}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4" *ngIf="inputType[i] !== 'Date'">
+                        <input class="form-control" style="width: 160px;margin-left: -330px;" type="text"
+                            [disabled]="(!selectedFilterName || added(i)) && !onEdited(i)" #val
+                            (change)="onChangeValue(val.value)" placeholder="Enter value">
+                    </div>
+                    <div class="form-group col-md-4" *ngIf="inputType[i] == 'Date'">
+                        <input class="form-control" style="width: 160px;margin-left: -330px;" type="date"
+                            [disabled]="(!selectedFilterName || added(i)) && !onEdited(i)" #val
+                            (change)="onChangeValue(val.value)" placeholder="Enter value">
+                    </div>
+                    <div class="form-group col-md-4" style="margin-left: -420px;" *ngIf="!added(i)">
+                        <button class="btn btn-outline-primary"
+                            (click)="addRow(col.value,condition.value,val.value,i)">Add
+                            <!-- <span><i class="fa fa-plus-square"></i></span> -->
+                        </button>
+                    </div>
+                    <div class="form-group col-md-4" style="margin-left: -420px;" *ngIf="added(i)">
+                        <button class="btn btn-outline-success" (click)="onEdit(i)">Edit
+
+                        </button>
+                    </div>
+                    <div class="form-group col-md-4" style="margin-left: -220px;" *ngIf="!onEditedRow(i)">
+                        <button class="btn btn-outline-danger" (click)="clearRow(i)">Delete</button>
+                    </div>
+                    <div class="form-group col-md-4" style="margin-left: -220px;" *ngIf="onEditedRow(i)">
+                        <button class="btn btn-outline-danger" (click)="updateRow(i)">Update</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <div class="col-xs-3">
+                    <button type="reset" class="btn btn-outline-success" (click)="onAddRule(filterForm)">Add
+                        Rule</button>&nbsp;
+                    <button type="reset" class="btn btn-outline-danger" (click)="onReset(filterForm)">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container-2">
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">S No.</th>
+                    <th scope="col">List of Rules</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of savedFilters">
+                    <th scope="row">{{data.count}}</th>
+                    <td>{{data.rule}}</td>
+                    <td><button class="btn btn-outline-primary" (click)="openPopup(data.count)">Edit</button>&nbsp;
+                        <button class="btn btn-outline-danger" (click)="onDeleteList(data.count)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+        <div class="modal-dialog" style="max-width: 68%;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <form class="form-group" style="display: flex;">
+                        <h6 style="margin-left: 2%;">Match</h6>
+                        <input type="radio" class="form-check-input" id="any" name="anyOrAll"
+                            (change)="onSelectAnyOrAll('any')">
+                        <label class="form-check-label" for="any">Any</label>
+                        <input type="radio" class="form-check-input" id="all" name="anyOrAll"
+                            (change)="onSelectAnyOrAll('all')">
+                        <label class="form-check-label" for="all">All</label>
+                    </form>
+                    <button type="button" class="btn btn-outline-primary" (click)="addNewSubrule()">Add Subrule</button>
+                </div>
+                <div class="modal-body">
+                    <form class="form" #filterForm="ngForm">
+
+                        <div class="form-wrapper">
+                            <div class="form-row" *ngFor="let data of newFilters; let i = index ">
+
+                                <div class="form-group col-md-4">
+                                    <select id="inputState" class="form-control" style="width: 160px;" #col
+                                        (change)="onChangeColName(col.value,i)">
+                                        <option selected>{{data.colName}}</option>
+                                        <option *ngFor="let value of inputData">{{value.colName}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select id="inputState" class="form-control"
+                                        style="width: 160px; margin-left: -110px;" #datatype
+                                        (change)="onChangeDatatype(datatype.value)">
+                                        <option selected>{{data.dataType}}</option>
+                                        <option>{{inputType[i]}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select id="inputState" class="form-control"
+                                        style="width: 160px; margin-left: -220px;" #condition
+                                        (change)="onChangeCondition(condition.value)">
+                                        <option selected>{{data.conditionName}}</option>
+                                        <option *ngFor="let value of conditionArr[i]">{{value}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4" *ngIf="inputType[i] !== 'Date'">
+                                    <input class="form-control" style="width: 160px;margin-left: -330px;" type="text"
+                                        #val (change)="onChangeValue(val.value)" placeholder="Enter value"
+                                        value="{{data.value}}">
+                                </div>
+                                <div class="form-group col-md-4" *ngIf="inputType[i] == 'Date'">
+                                    <input class="form-control" style="width: 160px;margin-left: -330px;" type="date"
+                                        #dateval (change)="onChangeValue(dateval.value)" placeholder="Enter value"
+                                        value="{{data.value}}">
+                                </div>
+
+                                <div class="form-group col-md-4" style="margin-left: -440px;">
+                                    <button class="btn btn-outline-primary" (click)="onUpdateRow(i)">Save</button>
+                                </div>
+                                <div class="form-group col-md-4" style="margin-left: -200px;">
+                                    <button class="btn btn-outline-danger" (click)="onDeleteRow(i)">Delete</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-footer">
+                            <div class="col-xs-3">
+                                <button type="reset" class="btn btn-outline-success" (click)="onAddRule(filterForm)">Add
+                                    Rule</button>&nbsp;
+                                <button type="reset" class="btn btn-outline-danger"
+                                    (click)="onReset(filterForm)">Reset</button>
+                            </div>
+                        </div> -->
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="closePopup()">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="updateListOfFilters()">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="footer">
+    <button class="btn btn-outline-warning" (click)="confirm()" style="margin-left: -20px;">Confirm</button>
+    <button class="btn btn-outline-success" (click)="submit()" style="margin-left: 20px;">Submit</button>
+</div>
