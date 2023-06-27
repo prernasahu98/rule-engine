@@ -1,6 +1,5 @@
 # RuleEngine
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.8.<br>
 The purpose of `rule-engine` is to create multiple rules and filter out data based on the given filter by the user.<br>
 A user can combine multiple subrules by giving the any`(|)` or all`(&)` condition to make a single set of rules.<br>
 User will be able to see the rules in the python readable format.
@@ -17,6 +16,12 @@ If a user wants to edit/delete any particular rule from the list of rules then i
 The user can save the changes after editing a subrule or they can delete it using `save` or `delete` button. They can also add a new subrule using `add subrule` button.<br>
 To save the changes user has to click on update, which will also update that particular rule in the list of rules.<br>
 To submit the form a user has to `confirm` it and then click on `submit` button.
+
+## prerequisite
+
+[Angular CLI](https://github.com/angular/angular-cli) version 15.2.8 or above.<br>
+npm version 9.5.1 or above.<br>
+node version 18.16.0 or above.
 
 ## Development server
 
