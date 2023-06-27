@@ -20,8 +20,8 @@ To submit the form a user has to `confirm` it and then click on `submit` button.
 ## prerequisite
 
 [Angular CLI](https://github.com/angular/angular-cli) version 15.2.8 or above.<br>
-npm version 9.5.1 or above.<br>
-node version 18.16.0 or above.
+[npm] version 9.5.1 or above.<br>
+[node] version 18.16.0 or above.
 
 ## Development server
 
